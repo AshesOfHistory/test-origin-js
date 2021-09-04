@@ -1,3 +1,11 @@
+/*
+ * @Author: 沧澜
+ * @Date: 2021-07-12 10:48:01
+ * @LastEditors: 沧澜
+ * @LastEditTime: 2021-09-04 17:09:58
+ * @FilePath: /test-origin-js/promise-implementation-mechanism.js
+ * @Description: promise执行机制和顺序
+ */
 // 1111111111
 new Promise((resolve, reject) => {
   console.log("外部promise");
@@ -9,12 +17,12 @@ new Promise((resolve, reject) => {
       console.log("内部promise");
       resolve();
     })
-    .then(() => {
-    console.log("内部第一个then");
-    })
-    .then(() => {
-    console.log("内部第二个then");
-    });
+      .then(() => {
+        console.log("内部第一个then");
+      })
+      .then(() => {
+        console.log("内部第二个then");
+      });
   })
   .then(() => {
     console.log("外部第二个then");
@@ -26,7 +34,6 @@ new Promise((resolve, reject) => {
 // 内部第一个then
 // 内部第二个then
 // 外部第二个then
-
 
 // 22222222
 new Promise((resolve, reject) => {
@@ -50,12 +57,12 @@ new Promise((resolve, reject) => {
     console.log("外部第二个then");
   });
 
-  // 外部promise
-  // 外部第一个then
-  // 内部promise
-  // 内部第一个then
-  // 外部第二个then
-  // 内部第二个then 
+// 外部promise
+// 外部第一个then
+// 内部promise
+// 内部第一个then
+// 外部第二个then
+// 内部第二个then
 
 // 333333333333
 
@@ -68,55 +75,54 @@ new Promise((resolve, reject) => {
     let p = new Promise((resolve, reject) => {
       console.log("内部promise");
       resolve();
-    })
+    });
     p.then(() => {
-        console.log("内部第一个then");
-      })
+      console.log("内部第一个then");
+    });
     p.then(() => {
-        console.log("内部第二个then");
-      });
+      console.log("内部第二个then");
+    });
   })
   .then(() => {
     console.log("外部第二个then");
   });
 
-  // 外部promise
-  // 外部第一个then
-  // 内部promise
-  // 内部第一个then
-  // 内部第二个then
-  // 外部第二个then
+// 外部promise
+// 外部第一个then
+// 内部promise
+// 内部第一个then
+// 内部第二个then
+// 外部第二个then
 
-  // 444444444444
+// 444444444444
 
-  let p = new Promise((resolve, reject) => {
-    console.log("外部promise");
+let p = new Promise((resolve, reject) => {
+  console.log("外部promise");
+  resolve();
+});
+p.then(() => {
+  console.log("外部第一个then");
+  new Promise((resolve, reject) => {
+    console.log("内部promise");
     resolve();
   })
-  p.then(() => {
-      console.log("外部第一个then");
-      new Promise((resolve, reject) => {
-        console.log("内部promise");
-        resolve();
-      })
-        .then(() => {
-          console.log("内部第一个then");
-        })
-        .then(() => {
-          console.log("内部第二个then");
-        });
+    .then(() => {
+      console.log("内部第一个then");
     })
-  p.then(() => {
-      console.log("外部第二个then");
+    .then(() => {
+      console.log("内部第二个then");
     });
+});
+p.then(() => {
+  console.log("外部第二个then");
+});
 
-    // 外部promise
-    // 外部第一个then
-    // 内部promise
-    // 外部第二个then
-    // 内部第一个then
-    // 内部第二个then
-
+// 外部promise
+// 外部第一个then
+// 内部promise
+// 外部第二个then
+// 内部第一个then
+// 内部第二个then
 
 // 55555555555555
 
@@ -161,48 +167,46 @@ new Promise((resolve, reject) => {
 // 内部第二个then2
 // 外部第二个then
 
-
-
 new Promise((resolve, reject) => {
-  console.log('外部promise');
+  console.log("外部promise");
   resolve();
   setTimeout(() => {
-    console.log('外部第一个setTimeout')
-  }, 0)
+    console.log("外部第一个setTimeout");
+  }, 0);
 })
   .then(() => {
-    console.log('外部第一个then');
+    console.log("外部第一个then");
     setTimeout(() => {
-      console.log('外部第一个then-setTimeout')
-    }, 0)
+      console.log("外部第一个then-setTimeout");
+    }, 0);
     new Promise((resolve, reject) => {
-      console.log('内部promise');
+      console.log("内部promise");
       resolve();
     })
       .then(() => {
-        console.log('内部第一个then');
+        console.log("内部第一个then");
         return Promise.resolve();
       })
       .then(() => {
-        console.log('内部第二个then');
+        console.log("内部第二个then");
       })
       .then(() => {
-        console.log('内部第三个then');
-      })
+        console.log("内部第三个then");
+      });
   })
   .then(() => {
-    console.log('外部第二个then');
+    console.log("外部第二个then");
   })
   .then(() => {
-    console.log('外部第三个then');
+    console.log("外部第三个then");
   })
   .then(() => {
-    console.log('外部第四个then')
+    console.log("外部第四个then");
   })
   .then(() => {
-    console.log('外部第五个then')
+    console.log("外部第五个then");
   })
   .then(() => {
-    console.log('外部第六个then')
-  })
-  // 外部promise 外部第一个then 内部promise 内部第一个then  外部第二个then 外部第三个then   内部第二个then
+    console.log("外部第六个then");
+  });
+// 外部promise 外部第一个then 内部promise 内部第一个then  外部第二个then 外部第三个then   内部第二个then

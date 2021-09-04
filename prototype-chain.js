@@ -1,18 +1,28 @@
+/*
+ * @Author: 沧澜
+ * @Date: 2021-07-09 13:13:19
+ * @LastEditors: 沧澜
+ * @LastEditTime: 2021-09-04 17:10:41
+ * @FilePath: /test-origin-js/prototype-chain.js
+ * @Description: 数据结构模拟原型链
+ */
 function Object() {
-  this.__proto__ = Function.prototype
-  this.create = function(constructor) {
-    return new constructor.__proto__.constructor
-  }
-  this.is = (x, y) => {// Object.is(x, y)
-    if (x === y) { // 针对+0 == = -0情况
-      return x !== 0 || 1 / x === 1 / y
-    }// 针对NaN!==NaN情况
-    return x !== x && y !== y
-  }
+  this.__proto__ = Function.prototype;
+  this.create = function (constructor) {
+    return new constructor.__proto__.constructor();
+  };
+  this.is = (x, y) => {
+    // Object.is(x, y)
+    if (x === y) {
+      // 针对+0 == = -0情况
+      return x !== 0 || 1 / x === 1 / y;
+    } // 针对NaN!==NaN情况
+    return x !== x && y !== y;
+  };
 }
 
 Object.prototype = {
-  type: 'object',
+  type: "object",
   __proto__: null,
   constructor: Object,
   // ...原生对象属性以及函数
@@ -27,26 +37,26 @@ Object.prototype = {
   __lookupGetter__() {},
   __lookupSetter__() {},
   ["get __proto__"]() {},
-  ["set __proto__"]() {}
-}
+  ["set __proto__"]() {},
+};
 
 function Function() {
-  this.__proto__ = Function.prototype
+  this.__proto__ = Function.prototype;
 }
 
 Function.prototype = {
-  type: 'function',
+  type: "function",
   __proto__: Object.prototype,
   constructor: Function,
-  split() {}
-}
+  split() {},
+};
 
 function Number() {
-  this.__proto__ = Function.prototype
+  this.__proto__ = Function.prototype;
 }
 
 Number.prototype = {
-  type: 'number',
+  type: "number",
   __proto__: Object.prototype,
   constructor: Number,
   toFixed() {},
@@ -54,15 +64,15 @@ Number.prototype = {
   toPrecision() {},
   toString() {},
   valueOf() {},
-  [[PrimitiveValue]]: 0
-}
+  [[PrimitiveValue]]: 0,
+};
 
 function String() {
-  this.__proto__ = Function.prototype
+  this.__proto__ = Function.prototype;
 }
 
 String.prototype = {
-  type: 'string',
+  type: "string",
   __proto__: Object.prototype,
   constructor: String,
   anchor() {},
@@ -79,7 +89,7 @@ String.prototype = {
   fontsize() {},
   includes(arr, value) {
     if (Array.isArray(arr)) {
-      arr.some(el => Object.is(el, value))
+      arr.some((el) => Object.is(el, value));
     }
   },
   indexOf() {},
@@ -98,13 +108,13 @@ String.prototype = {
   replaceAll() {},
   search() {},
   slice(start, end) {
-    var startToUse = start || 0
-        endToUse = end || ToUint32(this.length)
-        result = []
-    for(var i = startToUse; i < endToUse; i++) {
-      result.push(this[i])
+    var startToUse = start || 0;
+    endToUse = end || ToUint32(this.length);
+    result = [];
+    for (var i = startToUse; i < endToUse; i++) {
+      result.push(this[i]);
     }
-    return result
+    return result;
   },
   small() {},
   split() {},
@@ -127,30 +137,29 @@ String.prototype = {
   valueOf() {},
   trimRight() {},
   [Symbol.iterator]() {},
-  [[PrimitiveValue]]: ""
-}
+  [[PrimitiveValue]]: "",
+};
 
 function Boolean() {
-  this.__proto__ = Function.prototype
+  this.__proto__ = Function.prototype;
 }
 
 Boolean.prototype = {
-  type: 'boolean',
+  type: "boolean",
   __proto__: Object.prototype,
   constructor: Boolean,
   toString() {},
   valueOf() {},
-  [[PrimitiveValue]]: false
-}
+  [[PrimitiveValue]]: false,
+};
 
 function People() {
-  this.__proto__ = Function.prototype
+  this.__proto__ = Function.prototype;
 }
 
 People.prototype = {
-  type: 'function',
+  type: "function",
   __proto__: Object.prototype,
   constructor: People,
   // 自定义属性及函数
-}
-
+};
